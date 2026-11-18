@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Transaction Detection</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #172554;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px;
+            margin-top: 7px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 18px;
+            background: #eff6ff;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .error {
+            margin-top: 20px;
+            color: #b91c1c;
+            text-align: center;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Fraud Transaction Detection</h1>
+
+    <p class="subtitle">
+        Machine Learning Based Transaction Analysis
+    </p>
+
+    <form action="/predict" method="POST">
+
+        <label>Transaction Step</label>
+        <input type="number" name="step" min="0" required>
+
+        <label>Customer ID</label>
+        <input type="text" name="customer" placeholder="Example: C123456789" required>
+
+        <label>Age Group</label>
+        <select name="age" required>
+            <option value="">Select age group</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="U">Unknown</option>
+        </select>
+
+        <label>Gender</label>
+        <select name="gender" required>
+            <option value="">Select gender</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="E">Other</option>
+            <option value="U">Unknown</option>
+        </select>
+
+        <label>Merchant ID</label>
+        <input type="text" name="merchant" placeholder="Example: M123456789" required>
+
+        <label>Transaction Category</label>
+        <select name="category" required>
+            <option value="">Select category</option>
+            <option value="es_transportation">Transportation</option>
+            <option value="es_food">Food</option>
+            <option value="es_health">Health</option>
+            <option value="es_wellnessandbeauty">Wellness and Beauty</option>
+            <option value="es_sportsandtoys">Sports and Toys</option>
+            <option value="es_barsandrestaurants">Bars and Restaurants</option>
+            <option value="es_hotelservices">Hotel Services</option>
+            <option value="es_travel">Travel</option>
+            <option value="es_leisure">Leisure</option>
+            <option value="es_home">Home</option>
+            <option value="es_hyper">Hypermarket</option>
+            <option value="es_otherservices">Other Services</option>
+            <option value="es_tech">Technology</option>
+            <option value="es_fashion">Fashion</option>
+            <option value="es_contents">Contents</option>
+        </select>
+
+        <label>Transaction Amount</label>
+        <input type="number" name="amount" min="0" step="0.01" required>
+
+        <button type="submit">Check Transaction</button>
+
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        <h2>{{ prediction }}</h2>
+        <p>Predicted fraud probability: <strong>{{ probability }}%</strong></p>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error">
+        Error: {{ error }}
+    </div>
+    {% endif %}
+
+    <p class="note">
+        This project is for educational purposes and uses a synthetic dataset.
+        Predictions are model estimates, not proof of fraud.
+    </p>
+
+</div>
+
+</body>
+</html>
